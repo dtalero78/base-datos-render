@@ -29,3 +29,9 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en el puerto ${PORT}`);
 });
+
+// Ruta raíz para verificar el funcionamiento del backend
+app.get('/', (req, res) => {
+  res.send('✅ El backend está funcionando correctamente. Accede a /usuarios para obtener los datos.');
+});
+
