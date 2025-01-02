@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  server: {
-    port: 5173, // Fija el puerto 5173
-    strictPort: true // No intenta otro puerto si el 5173 está ocupado
+  preview: {
+    port: process.env.PORT || 4173, // Usar el puerto de Render si está definido
+    host: '0.0.0.0' // Asegura que esté accesible externamente
   }
 });
