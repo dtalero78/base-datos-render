@@ -37,14 +37,14 @@ app.get('/', (req, res) => {
 
 app.post('/insert', async (req, res) => {
   try {
-      const { idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero } = req.body;
+      const { idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero, celular } = req.body;
 
       const query = `
-          INSERT INTO usuarios (idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero)
-          VALUES ($1, $2, $3, $4, $5, $6, $7)
+          INSERT INTO usuarios (idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero, celular)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *;
       `;
-      const values = [idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero];
+      const values = [idGeneral, primerNombre, encuestaSalud, antecedentesFamiliares, edad, profesionUOficio, genero, celular];
 
       const result = await pool.query(query, values);
       res.status(200).json({ message: '✅ Datos guardados correctamente', data: result.rows[0] });
@@ -53,3 +53,4 @@ app.post('/insert', async (req, res) => {
       res.status(500).json({ error: '❌ Error al insertar datos' });
   }
 });
+
