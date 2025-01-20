@@ -23,13 +23,28 @@ app.get('/', (req, res) => {
 // ✅ Obtener todos los usuarios
 app.get('/usuarios', async (req, res) => {
   try {
+    const { idGeneral } = req.query; // Obtener el parámetro idGeneral de la URL
+
+    if (idGeneral) {
+      const result = await pool.query('SELECT * FROM usuarios WHERE idGeneral = $1', [idGeneral]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: '❌ Usuario no encontrado' });
+      }
+
+      return res.json(result.rows[0]); // Devolver solo el usuario encontrado
+    } 
+
+    // Si no se pasa idGeneral, devolver todos los registros
     const result = await pool.query('SELECT * FROM usuarios');
     res.json(result.rows);
+
   } catch (err) {
     console.error('❌ Error al obtener datos:', err.message);
     res.status(500).json({ error: '❌ Error al obtener datos' });
   }
 });
+
 
 // ✅ Insertar un nuevo registro
 app.post('/insert', async (req, res) => {
